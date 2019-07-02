@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Show all the tasks</title>
+</head>
+<body>
+
+<h1>This is all the tasks</h1>
+<ul>
+    <li th:each="task : ${tasks}">
+        Task Title: <span th:text="${task.title}"></span><br />
+        Task Description: <span th:text="${task.description}"></span><br />
+        Task Status: <span th:text="${task.status}"></span>
+    </li>
+</ul>
+
+<form method="POST" action="/tasks">
+    <lable for="title"> Tasks Title:</lable><input name="title" type="text" /><br />
+    <lable for="description"> Task Description:</lable><input name="description" type="text"/><br />
+    <input type="submit" />
+</form>
+
+</body>
+</html>
