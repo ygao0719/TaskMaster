@@ -32,12 +32,19 @@ public class TaskController {
     }
 
     @PutMapping("/tasks/{id}/state")
-    public ResponseEntity<?> updateStatus(@PathVariable String id, @RequestBody Task task){
+    public updateStatus(@PathVariable String id){
 
         Task certainTask = taskRepository.findById(id).get();
-        certainTask.setStatus("Assigned");
+        if (certainTask.getStatus().equals("Available")){
+            certainTask.setStatus("Assigned");
+        }else if(certainTask.getStatus().equals("Assigned")){
+            certainTask.setStatus("Accepted");
+        }else if(certainTask.getStatus().equals("Accepted")){
+            certainTask.setStatus("Finished");
+        }
+
         taskRepository.save(certainTask);
-        return ResponseEntity.ok("task saved");
+        return ;
     }
 
 }
