@@ -11,13 +11,16 @@
     <li th:each="task : ${tasks}">
         Task Title: <span th:text="${task.title}"></span><br />
         Task Description: <span th:text="${task.description}"></span><br />
-        Task Status: <span th:text="${task.status}"></span>
+        Task Status: <span th:text="${task.status}"></span><br />
+        Task Assignee: <span th:text="${task.assignee}"></span>
     </li>
 </ul>
 
 <form method="POST" action="/tasks">
     <lable for="title"> Tasks Title:</lable><input name="title" type="text" /><br />
     <lable for="description"> Task Description:</lable><input name="description" type="text"/><br />
+    <lable for="assignee"> Task Assignee:</lable><input name="assignee" type="text"/><br />
+
     <input type="submit" />
 </form>
 
