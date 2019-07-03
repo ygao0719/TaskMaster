@@ -23,18 +23,19 @@ public class TaskController {
     }
 
     @PostMapping("/tasks")
-    public RedirectView addTask(String title, String description){
+    public RedirectView addTask(String title, String description,String assignee){
 
-        Task newTask = new Task(title,description);
-        newTask.setStatus("Available");;
+        Task newTask = new Task(title,description,assignee);
+        newTask.setStatus("Available");
         taskRepository.save(newTask);
         return new RedirectView("/tasks");
     }
 
     @PutMapping("/tasks/{id}/state")
-    public updateStatus(@PathVariable String id){
+    public String updateStatus(@PathVariable String id){
 
         Task certainTask = taskRepository.findById(id).get();
+
         if (certainTask.getStatus().equals("Available")){
             certainTask.setStatus("Assigned");
         }else if(certainTask.getStatus().equals("Assigned")){
@@ -44,7 +45,7 @@ public class TaskController {
         }
 
         taskRepository.save(certainTask);
-        return ;
+        return "tasks";
     }
 
 }
