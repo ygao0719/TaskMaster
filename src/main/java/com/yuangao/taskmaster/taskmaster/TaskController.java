@@ -6,6 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @Controller
 public class TaskController {
@@ -27,6 +29,7 @@ public class TaskController {
         return new ResponseEntity(newTask,HttpStatus.OK);
     }
 
+    //find certain task by its id
     @PutMapping("/tasks/{id}/state")
     public ResponseEntity updateStatus(@PathVariable String id){
 
@@ -43,5 +46,28 @@ public class TaskController {
         taskRepository.save(certainTask);
         return new ResponseEntity(certainTask,HttpStatus.OK);
     }
+
+    //find all assignee's tasks
+    @GetMapping("/users/{name}/tasks")
+    public ResponseEntity getTaskFromUser(@PathVariable String name){
+
+        List<Task> userTasks = taskRepository.findByAssignee(name);
+        return new ResponseEntity(userTasks, HttpStatus.OK);
+
+    }
+
+    //assign a task to assignee
+    @PutMapping("/tasks/{id}/assign/{assignee}")
+    public ResponseEntity assignTaskToUser(@PathVariable String id, @PathVariable String assignee){
+        Task task = taskRepository.findById(id).get();
+        task.setAssignee(assignee);
+        task.setStatus("Assigned");
+
+        taskRepository.save(task);
+        return new ResponseEntity(task,HttpStatus.MULTI_STATUS);
+    }
+
+
+
 
 }
