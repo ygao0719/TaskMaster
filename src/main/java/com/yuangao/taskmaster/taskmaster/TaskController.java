@@ -1,11 +1,10 @@
 package com.yuangao.taskmaster.taskmaster;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.view.RedirectView;
 
 
 @Controller
@@ -15,24 +14,21 @@ public class TaskController {
     TaskRepository taskRepository;
 
     @GetMapping("/tasks")
-    public String getTasks(Model m){
-
+    public ResponseEntity getTasks(){
         Iterable<Task> tasks= taskRepository.findAll();
-        m.addAttribute("tasks",tasks);
-        return "tasks";
+        return new ResponseEntity(tasks, HttpStatus.OK);
     }
 
     @PostMapping("/tasks")
-    public RedirectView addTask(String title, String description,String assignee){
-
+    public ResponseEntity addTask(String title, String description,String assignee){
         Task newTask = new Task(title,description,assignee);
         newTask.setStatus("Available");
         taskRepository.save(newTask);
-        return new RedirectView("/tasks");
+        return new ResponseEntity(newTask,HttpStatus.OK);
     }
 
     @PutMapping("/tasks/{id}/state")
-    public String updateStatus(@PathVariable String id){
+    public ResponseEntity updateStatus(@PathVariable String id){
 
         Task certainTask = taskRepository.findById(id).get();
 
@@ -45,7 +41,7 @@ public class TaskController {
         }
 
         taskRepository.save(certainTask);
-        return "tasks";
+        return new ResponseEntity(certainTask,HttpStatus.OK);
     }
 
 }
