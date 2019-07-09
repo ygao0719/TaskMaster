@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -74,6 +75,22 @@ public class TaskController {
     }
 
 
+    //upload img
+    @PostMapping("/tasks/{id}/images")
+    public ResponseEntity uploadFile(@PathVariable String id, @RequestPart(value="file") MultipartFile file){
+        String pic = this.s3Client.uploadFile(file);
+        Task task = taskRepository.findById(id).get();
+        task.setPic(pic);
+        taskRepository.save(task);
+        return new ResponseEntity(task,HttpStatus.MULTI_STATUS);
 
+    }
+
+    //get all task from task id
+    @GetMapping("tasks/{id}")
+    public ResponseEntity getTasksById(@PathVariable String id){
+        Task task = taskRepository.findById(id).get();
+        return new ResponseEntity(task,HttpStatus.MULTI_STATUS);
+    }
 
 }
