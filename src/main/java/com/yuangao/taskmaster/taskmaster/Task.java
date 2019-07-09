@@ -7,12 +7,13 @@ import java.util.UUID;
 @DynamoDBTable(tableName = "Task")
 public class Task {
 
-    private String id;
+    public String id;
 
     String title;
     String description;
     String status;
     String assignee;
+    String pic;
 
     public Task(){}
 
@@ -48,6 +49,12 @@ public class Task {
         return assignee;
     }
 
+    @DynamoDBAttribute
+    public String getPic(){ return pic;}
+
+    public void setPic(String pic) {
+        this.pic = pic;
+    }
 
     public void setId(String id) {
         this.id = id;
