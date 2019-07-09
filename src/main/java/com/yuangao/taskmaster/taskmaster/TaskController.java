@@ -8,14 +8,19 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
+@CrossOrigin
 @Controller
 public class TaskController {
+    private S3Client s3Client;
+
+    @Autowired
+    TaskController(S3Client s3Client){
+        this.s3Client = s3Client;
+    }
 
     @Autowired
     TaskRepository taskRepository;
 
-    @CrossOrigin
     @GetMapping("/tasks")
     public ResponseEntity getTasks(){
         Iterable<Task> tasks= taskRepository.findAll();
