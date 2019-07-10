@@ -81,6 +81,12 @@ public class TaskController {
         String pic = this.s3Client.uploadFile(file);
         Task task = taskRepository.findById(id).get();
         task.setPic(pic);
+
+        //Evan's genious idea
+        String[] picSplit = pic.split("/");
+        String fileName = picSplit[picSplit.length-1];
+        task.setResizedPic("https://taskmaster-lab31resized.s3-us-west-2.amazonaws.com/resized-" + fileName);
+
         taskRepository.save(task);
         return new ResponseEntity(task,HttpStatus.MULTI_STATUS);
 
