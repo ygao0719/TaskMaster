@@ -9,7 +9,12 @@ allow users to keep track of tasks to be done and their status.
 ## Issues encountered during deployment
 - We used to use the RDS as the database to support applications. But this time we are 
 using NoSQL. I am not sure how to make the application connect to DynamoDB.
-- 10 July 2019: First of all, I had no idea how to 
+
+- 10 July 2019: First of all, I had no idea how to send the resized image url to database. Thanks for Evan's help. According to 
+full size image url, create resized image url and save to database. After that, there was another issue with my browser-chrome.
+Somehow Chrome created my form in a sandbox and blocked the image I try to upload. I cleaned my browser history and restart 
+the browser. The issue got fixed. Another issue, when I upload an image in frontend, I could not see the resized image because 
+S3 block the access to read. 
 
 ## Features
 - 4 July 2019:
@@ -32,6 +37,7 @@ using NoSQL. I am not sure how to make the application connect to DynamoDB.
     - Users should be able to upload images that are associated with tasks.
   - Get /tasks/{id}  
     - Tasks should also include the image URLs associated with that image.
+    
 - 10 July 2019 
   - When an image is uploaded to your S3 bucket, it should trigger a Lambda function. (That Lambda function may be 
   written in Note.js.)
