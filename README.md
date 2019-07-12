@@ -43,3 +43,9 @@ S3 block the access to read.
   written in Note.js.)
   - That function should create a 50x50 pixel thumbnail version of that image, and save it to another S3 bucket.
   - When the server receives the full size image, save the resized image url to database too.  
+  
+- 12 July 2019
+    - create a CloudWatch timer to help keep lambda function - CreateThumbnail alive
+ ![snapshot for thumbnailWarmer](./thumbnailWarmer.png)
+ ![snapshot from cloudWatch](./thumbnailGraph1.png)
+ ![snapshot from cloudWatch](./thumbnailGraph2.png)
